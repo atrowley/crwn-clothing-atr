@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./sign-in-form.styles.scss";
 import {
   createUserDocumentFromAuth,
@@ -6,8 +6,8 @@ import {
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 import Button from "../button/button.component";
-
 import FormInput from "../form-input/form-input.component";
+import { UserContext } from "../../contexts/user.context";
 
 const defaultFormFields = {
   email: "",
@@ -18,6 +18,10 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
+  // Pass our defined UserContext to React function useContext to access the context
+  // In index.js we have wrapped App with our definded "UserProvider" const, enabling this
+  const { setCurrentUser } = useContext(UserContext);
+
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
@@ -26,11 +30,11 @@ const SignInForm = () => {
     event.preventDefault(); // we want to control all behaviour
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-      console.log(response);
+      setCurrentUser(user);
       resetFormFields();
     } catch (error) {
       switch (error.code) {
