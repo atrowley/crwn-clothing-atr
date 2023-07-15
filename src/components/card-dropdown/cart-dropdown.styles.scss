@@ -1,4 +1,14 @@
 .cart-dropdown-container {
+  ::-webkit-scrollbar {
+    background: white;
+    width: 7px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 5px;
+  }
+
   position: absolute;
   width: 240px;
   height: 340px;
@@ -20,7 +30,7 @@
     height: 240px;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: scroll;
   }
 
   button {
