@@ -20,8 +20,10 @@ export const UserProvider = ({ children }) => {
       if (user) {
         createUserDocumentFromAuth(user);
       }
-      setCurrentUser(user); // will set to a user on log-ing, or null if there is a log out
+      setCurrentUser(user); // will set to a user on log-in, or null if there is a log out
     });
+
+    // This is the returned clean up function
     return unsubscribe;
   }, []);
 
